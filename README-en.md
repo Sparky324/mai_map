@@ -35,4 +35,4 @@ If you found a mistake in the work of the application, or want to suggest an ide
 * @l_asv_l - Sinkin Andrey (developer, 3D modeling)
 * @gnidenko17 - Shiryaev Alexander (developer)
 * @chetyreleon - Ryzhov Egor Andreevich (designer)
-* @LeahTheFatui - Bazhenkova Liya (designer)
+* @LeahTheFatui - Bazhenkova Liya (designer, interpreter)
