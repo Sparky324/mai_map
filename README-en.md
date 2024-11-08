@@ -1,6 +1,6 @@
 # MAI.MAP
 
-[Русский](README.md) | **English**
+[Русский](README.md) | **English** | [中国人](README-cn.md)
 
 MAI.MAP is an open source project created specifically for students, teachers and employees of the Moscow Aviation Institute.
 With MAI.MAP, everyone can move around the institute without a chance to get lost.
