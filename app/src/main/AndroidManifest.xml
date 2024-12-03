@@ -10,8 +10,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Mai_map"
+        android:theme="@style/Base.Theme.Mai_map"
         tools:targetApi="31">
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RouteActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
