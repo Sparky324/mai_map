@@ -38,16 +38,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             setTheme(R.style.AppTheme);
         }
 
-        int langSelected = sharedPreferences.getInt("Lang", 0);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
         Button switchTheme = (Button)findViewById(R.id.switchThemeButton);
         Button restart = (Button)findViewById(R.id.buttonRestart);
-        Spinner spinner = (Spinner)findViewById(R.id.spinner);
-
-        spinner.setSelection(langSelected);
 
         switchTheme.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,26 +59,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 ProcessPhoenix.triggerRebirth(getApplicationContext());
-            }
-        });
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String[] choose = {"ru", "en", "cn"};
-                Locale locale = new Locale(choose[i]);
-                Locale.setDefault(locale);
-                Configuration config = getBaseContext().getResources().getConfiguration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config,
-                        getBaseContext().getResources().getDisplayMetrics());
-                editor.putInt("Lang", i);
-                editor.apply();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
     }

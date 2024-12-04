@@ -40,19 +40,6 @@
         android:text="@string/restartBtn"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="155dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="232dp"
-        android:layout_marginBottom="329dp"
-        android:entries="@array/languages"
-        app:layout_constraintBottom_toTopOf="@+id/buttonRestart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
