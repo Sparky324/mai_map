@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">mai_map</string>
+    <string name="change_theme">Сменить тему</string>
+    <string name="settingsBtn">Настройки</string>
+    <string name="app_name" translatable="false">MAIMap</string>
+    <string name="restartBtn">Перезапустить</string>
+    <string name="needRestartText">Чтобы изменения вступили в силу нужно перезапустить приложение</string>
+
+    <string-array name="languages" translatable="false">
+        <item>Русский</item>
+        <item>English</item>
+        <item>中文</item>
+    </string-array>
 </resources>

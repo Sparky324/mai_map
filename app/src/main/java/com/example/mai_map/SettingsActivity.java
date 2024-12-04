@@ -5,13 +5,20 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.jakewharton.processphoenix.ProcessPhoenix;
+
+import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,23 +38,24 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             setTheme(R.style.AppTheme);
         }
 
+        int langSelected = sharedPreferences.getInt("Lang", 0);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
         Button switchTheme = (Button)findViewById(R.id.switchThemeButton);
         Button restart = (Button)findViewById(R.id.buttonRestart);
+        Spinner spinner = (Spinner)findViewById(R.id.spinner);
+
+        spinner.setSelection(langSelected);
 
         switchTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isNightModeOn){
-                    editor.putBoolean("Theme", false);
-                }else {
-                    editor.putBoolean("Theme", true);
-                }
+                editor.putBoolean("Theme", !isNightModeOn);
                 editor.apply();
                 TextView textView = (TextView) findViewById(R.id.textView);
-                textView.setText("Чтобы изменения вступили в силу нужно перезапустить приложение");
+                textView.setText(R.string.needRestartText);
                 restart.setVisibility(View.VISIBLE);
             }
         });
@@ -56,6 +64,26 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 ProcessPhoenix.triggerRebirth(getApplicationContext());
+            }
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String[] choose = {"ru", "en", "cn"};
+                Locale locale = new Locale(choose[i]);
+                Locale.setDefault(locale);
+                Configuration config = getBaseContext().getResources().getConfiguration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+                editor.putInt("Lang", i);
+                editor.apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }

@@ -15,7 +15,7 @@
         android:id="@+id/settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings"
+        android:text="@string/settingsBtn"
         sothree:layout_constraintStart_toStartOf="parent"
         sothree:layout_constraintTop_toTopOf="parent" />
 
