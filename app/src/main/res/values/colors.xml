@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_dark">#050b51</color>
-    <color name="sec_dark">#F4F4FB</color>
-    <color name="acc_dark">#031E2B</color>
-    <color name="main_light">#050b51</color>
-    <color name="sec_light">#031E2B</color>
-    <color name="acc_light">#F4F4FB</color>
+    <color name="main_dark">#2C2C34</color>
+    <color name="sec_dark">#6E7DAB</color>
+    <color name="acc_dark">#FF7F11</color>
+    <color name="main_light">#2C2C34</color>
+    <color name="sec_light">#F4F4FB</color>
+    <color name="acc_light">#6E7DAB</color>
 </resources>

@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
+
+import com.jakewharton.processphoenix.ProcessPhoenix;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -16,30 +19,43 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-
-        sharedPreferences = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = getSharedPreferences("settings", Context.MODE_PRIVATE).edit();
 
         boolean isNightModeOn = sharedPreferences.getBoolean("Theme", false);
 
+        if (isNightModeOn){
+            setTheme(R.style.AppThemeDark);
+        } else {
+            setTheme(R.style.AppTheme);
+        }
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+
         Button switchTheme = (Button)findViewById(R.id.switchThemeButton);
+        Button restart = (Button)findViewById(R.id.buttonRestart);
+
         switchTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isNightModeOn){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    switchTheme.setText("Enable Dark Mode");
                     editor.putBoolean("Theme", false);
-
                 }else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    switchTheme.setText("Disable Dark Mode");
                     editor.putBoolean("Theme", true);
                 }
                 editor.apply();
+                TextView textView = (TextView) findViewById(R.id.textView);
+                textView.setText("Чтобы изменения вступили в силу нужно перезапустить приложение");
+                restart.setVisibility(View.VISIBLE);
+            }
+        });
+
+        restart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProcessPhoenix.triggerRebirth(getApplicationContext());
             }
         });
     }

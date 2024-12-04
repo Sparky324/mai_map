@@ -1,13 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Mai_map" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/main_light</item>
-        <item name="colorPrimaryDark">@color/sec_light</item>
-        <item name="colorAccent">@color/acc_light</item>
+    <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Определение цвета для светлой темы -->
+        <item name="colorPrimary">#6200EE</item> <!-- Основной цвет -->
+        <item name="colorOnPrimary">#FFFFFF</item> <!-- Цвет текста на основном фоне -->
+        <item name="backgroundColor">#FFFFFF</item> <!-- Светлый фон -->
+        <item name="android:textColorPrimary">#000000</item> <!-- Черный текст на светлом фоне -->
     </style>
 
-    <style name="splashScreenTheme" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
+    <style name="AppThemeDark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Определение цвета для темной темы -->
+        <item name="colorPrimary">#6200EE</item> <!-- Основной цвет (тот же, что и для светлой темы) -->
+        <item name="colorOnPrimary">#FFFFFF</item> <!-- Цвет текста на основном фоне -->
+        <item name="backgroundColor">#121212</item> <!-- Темный фон -->
+        <item name="android:textColorPrimary">#FFFFFF</item> <!-- Белый текст на темном фоне -->
+    </style>
+
+    <style name="splashScreenTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 </resources>
