@@ -11,15 +11,54 @@
     sothree:panelHeight="68dp"
     sothree:shadowHeight="4dp">
 
-    <Button
-        android:id="@+id/settingsButton"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/settingsBtn"
         sothree:layout_constraintStart_toStartOf="parent"
-        sothree:layout_constraintTop_toTopOf="parent" />
+        sothree:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        >
 
-    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        <!-- C app: (sothree:) не меняется цвет tint при смене темы -->
+        <ImageButton
+            android:id="@+id/settingsButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/button_drawable"
+            android:src="@drawable/settings_icon"
+            android:layout_marginBottom="5dp"
+            android:tint="?android:textColorPrimary"
+            >
+        </ImageButton>
+
+        <Button
+            android:id="@+id/langButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/button_drawable"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="25sp"
+            android:padding="5dp"
+            android:text="RU"
+            android:visibility="gone"
+            android:layout_marginBottom="5dp">
+        </Button>
+
+        <ImageButton
+            android:id="@+id/themeButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/button_drawable"
+            android:src="?android:src"
+            android:visibility="gone"
+            android:tint="?android:textColorPrimary">
+        </ImageButton>
+    </LinearLayout>
+
+    <!--com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/slide_layout"
         android:layout_width="413dp"
         android:layout_height="647dp"
@@ -56,6 +95,6 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

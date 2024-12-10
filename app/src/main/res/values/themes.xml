@@ -6,14 +6,16 @@
         <item name="colorOnPrimary">#FFFFFF</item> <!-- Цвет текста на основном фоне -->
         <item name="backgroundColor">#FFFFFF</item> <!-- Светлый фон -->
         <item name="android:textColorPrimary">#000000</item> <!-- Черный текст на светлом фоне -->
+        <item name="android:src">@drawable/dark_mode_icon</item> <!-- Иконка кнопки смены темы (на темную) -->
     </style>
 
     <style name="AppThemeDark" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Определение цвета для темной темы -->
-        <item name="colorPrimary">#6200EE</item> <!-- Основной цвет (тот же, что и для светлой темы) -->
+        <item name="colorPrimary">#0000EE</item> <!-- Основной цвет (тот же, что и для светлой темы) -->
         <item name="colorOnPrimary">#FFFFFF</item> <!-- Цвет текста на основном фоне -->
-        <item name="backgroundColor">#121212</item> <!-- Темный фон -->
-        <item name="android:textColorPrimary">#FFFFFF</item> <!-- Белый текст на темном фоне -->
+        <item name="backgroundColor">#101010</item> <!-- Темный фон -->
+        <item name="android:textColorPrimary">#ABABAB</item> <!-- Белый текст на темном фоне -->
+        <item name="android:src">@drawable/light_mode_icon</item> <!-- Иконка кнопки смены темы (на светлую) -->
     </style>
 
     <style name="splashScreenTheme" parent="Theme.Material3.DayNight.NoActionBar">
