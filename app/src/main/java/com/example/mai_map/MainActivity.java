@@ -42,7 +42,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
         boolean isNightModeOn = sharedPreferences.getBoolean("Theme", false);
-        short langIdx = (short)sharedPreferences.getInt("Lang", 0);
+        String langCode = sharedPreferences.getString("Lang", "ru");
+
+        changeAppLocale(langCode);
 
         if (isNightModeOn){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -59,7 +61,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor spEditor = sharedPreferences.edit();
 
-        short langIdx = (short)sharedPreferences.getInt("Lang", 0);
         boolean isNightModeOn = sharedPreferences.getBoolean("Theme", false);
 
         if (isNightModeOn){
@@ -92,6 +93,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             public void onClick(View view) {
                 changeAppLocale("en");
 
+                spEditor.putString("Lang", "en");
+                spEditor.apply();
+
                 recreate();
                 overridePendingTransition(0, 0);
             }
@@ -103,6 +107,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             public void onClick(View view) {
                 changeAppLocale("ru");
 
+                spEditor.putString("Lang", "ru");
+                spEditor.apply();
+
                 recreate();
                 overridePendingTransition(0, 0);
             }
@@ -113,6 +120,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 changeAppLocale("zh");
+
+                spEditor.putString("Lang", "zh");
+                spEditor.apply();
 
                 recreate();
                 overridePendingTransition(0, 0);
