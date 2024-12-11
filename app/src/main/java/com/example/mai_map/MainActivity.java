@@ -6,6 +6,8 @@ import static android.view.View.VISIBLE;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,12 +15,25 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import java.util.Locale;
+
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
     SharedPreferences sharedPreferences;
     boolean showSettings = false;
-    String[] languages = { "RU", "EN", "CN" };
+    boolean showLangSettings = false;
+    private void changeAppLocale(String langCode) {
+        Locale locale = new Locale(langCode);
+        Locale.setDefault(locale);
+
+        Resources res = this.getResources();
+        Configuration newConfig = res.getConfiguration();
+
+        newConfig.setLocale(locale);
+
+        res.updateConfiguration(newConfig, res.getDisplayMetrics());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +76,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 setTheme(isNightModeOn ? R.style.AppTheme : R.style.AppThemeDark);
+                AppCompatDelegate.setDefaultNightMode(showLangSettings ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
 
                 spEditor.putBoolean("Theme", !isNightModeOn);
                 spEditor.apply();
@@ -70,21 +86,55 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         });
 
+        Button enLangButton = (Button)findViewById(R.id.langButton_EN);
+        enLangButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeAppLocale("en");
+
+                recreate();
+                overridePendingTransition(0, 0);
+            }
+        });
+
+        Button ruLangButton = (Button)findViewById(R.id.langButton_RU);
+        ruLangButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeAppLocale("ru");
+
+                recreate();
+                overridePendingTransition(0, 0);
+            }
+        });
+
+        Button cnLangButton = (Button)findViewById(R.id.langButton_CN);
+        cnLangButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeAppLocale("zh");
+
+                recreate();
+                overridePendingTransition(0, 0);
+            }
+        });
 
         Button langButton = (Button)findViewById(R.id.langButton);
         langButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                short langIdx = (short)sharedPreferences.getInt("Lang", 0);
-                langIdx = (short)((langIdx + 1) % languages.length);
+                if (showLangSettings) {
+                    enLangButton.setVisibility(GONE);
+                    ruLangButton.setVisibility(GONE);
+                    cnLangButton.setVisibility(GONE);
+                }
+                else {
+                    enLangButton.setVisibility(VISIBLE);
+                    ruLangButton.setVisibility(VISIBLE);
+                    cnLangButton.setVisibility(VISIBLE);
+                }
 
-                langButton.setText(languages[langIdx]);
-
-                spEditor.putInt("Lang", langIdx);
-                spEditor.apply();
-
-                recreate();
-                overridePendingTransition(0, 0);
+                showLangSettings = !showLangSettings;
             }
         });
 
@@ -93,11 +143,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
             public void onClick(View view) {
                 if (showSettings) {
                     themeButton.setVisibility(GONE);
-                    langButton.setVisibility(GONE);
+                    findViewById(R.id.langSettingsContainer).setVisibility(GONE);
                 }
                 else {
                     themeButton.setVisibility(VISIBLE);
                     langButton.setVisibility(VISIBLE);
+                    findViewById(R.id.langSettingsContainer).setVisibility(VISIBLE);
                 }
 
                 showSettings = !showSettings;
