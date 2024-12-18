@@ -10,8 +10,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
+        flatDir {
+            dirs("libs")
+        }
     }
 }
 
 rootProject.name = "mai_map"
-include ':app'
+include ':app', ':unity-plugin'

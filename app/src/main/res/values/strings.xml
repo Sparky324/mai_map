@@ -7,4 +7,5 @@
         <item>中文</item>
     </string-array>
     <string name="lang_btn">EN</string>
+    <string name="relaunch_theme">Relaunch app to apply changes</string>
 </resources>

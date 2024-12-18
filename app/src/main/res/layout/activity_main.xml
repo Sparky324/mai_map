@@ -5,11 +5,16 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="bottom"
-    sothree:fadeColor="@android:color/holo_blue_light"
-    sothree:overlay="false"
-    sothree:panelHeight="68dp"
-    sothree:shadowHeight="4dp">
+    tools:context=".MainActivity"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        android:id="@+id/unityLayout">
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -37,8 +42,7 @@
         <LinearLayout
             android:id="@+id/langSettingsContainer"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:layout_height="wrap_content">
             <Button
                 android:id="@+id/langButton"
                 android:layout_width="60dp"
@@ -100,49 +104,82 @@
             android:layout_height="60dp"
             android:background="@drawable/button_drawable"
             android:src="?android:src"
-            android:visibility="gone"
-            android:tint="?android:textColorPrimary">
-        </ImageButton>
+            android:tint="?android:textColorPrimary"
+            android:visibility="gone"></ImageButton>
 
     </LinearLayout>
 
-    <!--com.sothree.slidinguppanel.SlidingUpPanelLayout
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/slide_layout"
-        android:layout_width="413dp"
-        android:layout_height="647dp"
-        android:layout_marginTop="75dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="450dp"
         android:gravity="bottom"
-        sothree:fadeColor="@android:color/holo_blue_light"
+        android:background="#00000000"
         sothree:layout_constraintBottom_toBottomOf="parent"
         sothree:layout_constraintEnd_toEndOf="parent"
         sothree:layout_constraintHorizontal_bias="0.666"
         sothree:layout_constraintStart_toStartOf="parent"
         sothree:layout_constraintTop_toTopOf="parent"
         sothree:layout_constraintVertical_bias="0.652"
-        sothree:overlay="false"
-        sothree:panelHeight="68dp"
-        sothree:shadowHeight="4dp">
+        sothree:overlay="false">
 
-        <TextView
+        <View
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="тут карта будет"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content">
+        </View>
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center|top"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/panel_drawable"
+            android:padding="16dp">
 
-            <TextView
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/listBeginning"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Выдвижная панель"
-                android:textSize="16sp" />
+                android:background="@drawable/dropdown_list_background"
+                android:layout_marginBottom="10dp"
+                >
+
+            </Spinner>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotation="90"
+                android:src="@drawable/arrow_swap"
+                android:tint="?android:textColorPrimary"
+                android:layout_marginBottom="10dp"
+                >
+            </ImageView>
+
+            <Spinner
+                android:id="@+id/listEnding"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dropdown_list_background"
+                android:layout_marginBottom="30dp"
+                >
+
+            </Spinner>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/calculatePath"
+                android:padding="15dp"
+                android:text="Построить маршрут"
+                android:background="@drawable/calc_path_button"
+                >
+
+            </Button>
+
         </LinearLayout>
 
-    </com.sothree.slidinguppanel.SlidingUpPanelLayout-->
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

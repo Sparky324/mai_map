@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="lang_btn">EN</string>
+    <string name="relaunch_theme">Relaunch app to apply changes</string>
 </resources>

@@ -17,8 +17,4 @@
         <item name="android:textColorPrimary">#ABABAB</item> <!-- Белый текст на темном фоне -->
         <item name="android:src">@drawable/light_mode_icon</item> <!-- Иконка кнопки смены темы (на светлую) -->
     </style>
-
-    <style name="splashScreenTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
-    </style>
 </resources>

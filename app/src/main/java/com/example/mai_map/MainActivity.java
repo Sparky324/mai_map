@@ -3,26 +3,46 @@ package com.example.mai_map;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatDelegate;
+import com.unity3d.player.UnityPlayer;
+import com.unity3d.player.UnityPlayerActivity;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 
-public class MainActivity extends Activity implements View.OnClickListener {
-
+public class MainActivity extends UnityPlayerActivity {
     SharedPreferences sharedPreferences;
     boolean showSettings = false;
     boolean showLangSettings = false;
+
+    Map<String, String> points = Map.ofEntries(
+            Map.entry("КПП №1", "kpp_1"),
+            Map.entry("КПП №3", "kpp_3"),
+            Map.entry("КПП №4", "kpp_4"),
+            Map.entry("Корпус №3", "corp_3"),
+            Map.entry("Корпус №5", "corp_5"),
+            Map.entry("Корпус №9", "corp_9"),
+            Map.entry("Корпус ГАК", "corp_gak"),
+            Map.entry("Корпус ГУК В", "corp_guk_v")
+    );
+
     private void changeAppLocale(String langCode) {
         Locale locale = new Locale(langCode);
         Locale.setDefault(locale);
@@ -35,55 +55,51 @@ public class MainActivity extends Activity implements View.OnClickListener {
         res.updateConfiguration(newConfig, res.getDisplayMetrics());
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.splashScreenTheme);
-
-        sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
-
-        boolean isNightModeOn = sharedPreferences.getBoolean("Theme", false);
-        String langCode = sharedPreferences.getString("Lang", "ru");
-
-        changeAppLocale(langCode);
-
-        if (isNightModeOn){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            setTheme(R.style.AppThemeDark);
-        } else {
-            setTheme(R.style.AppTheme);
-        }
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public static void showRelaunchMessage(Context ctx) {
+        String message = ctx.getString(R.string.relaunch_theme);
+        Toast.makeText(ctx, message, Toast.LENGTH_LONG).show();
     }
 
-    protected void onStart(){
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFormat(PixelFormat.RGBX_8888);
+
+        super.onCreate(savedInstanceState);
+
         sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        boolean isNightModeOn = sharedPreferences.getBoolean("Theme", false);
+        String langCode = sharedPreferences.getString("Lang", "en");
+
+        if (isNightModeOn) {
+            setTheme(R.style.AppThemeDark);
+            UnityPlayer.UnitySendMessage("MainCamera", "ChangeBackroungColor", "#202020");
+        }
+        else {
+            setTheme(R.style.AppTheme);
+            UnityPlayer.UnitySendMessage("MainCamera", "ChangeBackroungColor", "D9D9D9");
+        }
+        changeAppLocale(langCode);
+
+        setContentView(R.layout.activity_main);
         SharedPreferences.Editor spEditor = sharedPreferences.edit();
 
-        boolean isNightModeOn = sharedPreferences.getBoolean("Theme", false);
-
-        if (isNightModeOn){
-            setTheme(R.style.AppThemeDark);
-        } else {
-            setTheme(R.style.AppTheme);
+        FrameLayout unityLayout = (FrameLayout)findViewById(R.id.unityLayout);
+        while (((View)mUnityPlayer.getView()).getParent() != null) {
+            ((ViewGroup)((View)mUnityPlayer.getView()).getParent()).removeView((View)mUnityPlayer.getView());
         }
 
-        super.onStart();
-        setContentView(R.layout.activity_main);
+        unityLayout.addView(mUnityPlayer.getView(), FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 
         ImageButton themeButton = (ImageButton) findViewById(R.id.themeButton);
         themeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setTheme(isNightModeOn ? R.style.AppTheme : R.style.AppThemeDark);
-                AppCompatDelegate.setDefaultNightMode(showLangSettings ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
-
-                spEditor.putBoolean("Theme", !isNightModeOn);
+                boolean isDarkMode = sharedPreferences.getBoolean("Theme", false);
+                spEditor.putBoolean("Theme", !isDarkMode);
                 spEditor.apply();
 
-                recreate();
-                overridePendingTransition(0, 0);
+                showRelaunchMessage(MainActivity.this);
             }
         });
 
@@ -91,13 +107,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         enLangButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeAppLocale("en");
-
                 spEditor.putString("Lang", "en");
-                spEditor.apply();
+                spEditor.apply();;
 
-                recreate();
-                overridePendingTransition(0, 0);
+                showRelaunchMessage(MainActivity.this);
             }
         });
 
@@ -105,13 +118,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         ruLangButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeAppLocale("ru");
-
                 spEditor.putString("Lang", "ru");
                 spEditor.apply();
 
-                recreate();
-                overridePendingTransition(0, 0);
+                showRelaunchMessage(MainActivity.this);
             }
         });
 
@@ -119,13 +129,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         cnLangButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeAppLocale("zh");
-
                 spEditor.putString("Lang", "zh");
                 spEditor.apply();
 
-                recreate();
-                overridePendingTransition(0, 0);
+                showRelaunchMessage(MainActivity.this);
             }
         });
 
@@ -164,10 +171,35 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 showSettings = !showSettings;
             }
         });
+
+        Set<String> pointsSet = points.keySet();
+        String[] pointsArray = pointsSet.toArray(new String[pointsSet.size()]);
+
+        Spinner srcPointList = findViewById(R.id.listBeginning);
+        ArrayAdapter<String> srcAdapterItems = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, pointsArray);
+        srcAdapterItems.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        srcPointList.setAdapter(srcAdapterItems);
+
+        Spinner endPointList = findViewById(R.id.listEnding);
+        ArrayAdapter<String> endAdapterItems = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, pointsArray);
+        endAdapterItems.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        endPointList.setAdapter(endAdapterItems);
+
+        Button calcPathBtn = (Button)findViewById(R.id.calculatePath);
+        calcPathBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String srcPointCode = points.get(srcPointList.getSelectedItem().toString());
+                String endPointCode = points.get(endPointList.getSelectedItem().toString());
+
+                String combinedParam = srcPointCode + ";" + endPointCode;
+
+                UnityPlayer.UnitySendMessage("Housing_Full_Map", "findPath", combinedParam);
+            }
+        });
     }
 
-    @Override
-    public void onClick(View view) {
-
+    protected void onStart(){
+        super.onStart();
     }
 }
